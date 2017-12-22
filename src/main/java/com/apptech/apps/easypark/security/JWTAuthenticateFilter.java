@@ -46,7 +46,6 @@ public class JWTAuthenticateFilter extends UsernamePasswordAuthenticationFilter 
 							.getUsername(), creds.getPassword(),
 							new ArrayList<>()));
 		} catch (IOException exception) {
-			
 
 		}
 		return authenticate;
@@ -57,14 +56,10 @@ public class JWTAuthenticateFilter extends UsernamePasswordAuthenticationFilter 
 	protected void successfulAuthentication(HttpServletRequest req,
 			HttpServletResponse res, FilterChain chain, Authentication auth)
 			throws IOException, ServletException {
-
 		String ezpToken = JWTUtil.generateToken(settings,
 				loginUserService.getPublicDetails());
-		res.getWriter().write(settings.getToken().getHeaderlabel()+":"+ settings.getToken()
+		res.addHeader(settings.getToken().getHeaderlabel(), settings.getToken()
 				.getPrefixlabel() + AppConstants.SPACE + ezpToken);
-
-		res.setHeader("Access-Control-Allow-Origin",
-				req.getHeader("Origin"));
-
+		res.setHeader("Access-Control-Allow-Origin", req.getHeader("Origin"));
 	}
 }
