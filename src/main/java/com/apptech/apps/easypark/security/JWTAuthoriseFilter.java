@@ -22,7 +22,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
-import com.apptech.apps.easypark.constants.JWTClaimField;
+import com.apptech.apps.easypark.security.constants.JWTClaimField;
 
 public class JWTAuthoriseFilter extends BasicAuthenticationFilter {
 

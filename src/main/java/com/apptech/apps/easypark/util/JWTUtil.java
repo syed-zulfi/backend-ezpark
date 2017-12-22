@@ -11,9 +11,9 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.apptech.apps.easypark.constants.JWTClaimField;
 import com.apptech.apps.easypark.dao.entity.User;
 import com.apptech.apps.easypark.security.JWTAuthSettings;
+import com.apptech.apps.easypark.security.constants.JWTClaimField;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

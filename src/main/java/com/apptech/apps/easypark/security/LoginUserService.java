@@ -11,11 +11,11 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.apptech.apps.easypark.constants.JWTClaimField;
 import com.apptech.apps.easypark.controllers.vo.UserDTO;
 import com.apptech.apps.easypark.dao.entity.User;
 import com.apptech.apps.easypark.dao.infc.UserRepo;
 import com.apptech.apps.easypark.exceptions.ApplicationException;
+import com.apptech.apps.easypark.security.constants.JWTClaimField;
 
 @Service("loginUserService")
 public class LoginUserService implements UserDetailsService {
