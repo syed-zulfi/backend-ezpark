@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application xmlns="http://wadl.dev.java.net/2009/02">
+  <doc xml:lang="en" title="Service-Endpoints"/>
+  <resources base="http://localhost:8282">
+    <resource path="apptech/easypark/api/public/register" id="Public[Register]">
+      <doc xml:lang="en" title="Public[Register]"/>
+      <method name="POST" id="Register">
+        <doc xml:lang="en" title="Register"/>
+        <request>
+          <representation mediaType="application/json"/>
+        </request>
+        <response status="">
+          <representation mediaType="application/json"/>
+        </response>
+        <response status="404">
+          <representation mediaType="application/json;charset=UTF-8"/>
+        </response>
+        <response status="201">
+          <representation mediaType="application/json;charset=UTF-8"/>
+        </response>
+      </method>
+    </resource>
+    <resource path="apptech/easypark/api/public/validate/userid" id="Public[Validate]">
+      <doc xml:lang="en" title="Public[Validate]"/>
+      <param name="entry" type="xs:string" required="false" default="" style="query" xmlns:xs="http://www.w3.org/2001/XMLSchema"/>
+      <method name="GET" id="Validate">
+        <doc xml:lang="en" title="Validate"/>
+        <request/>
+        <response status="">
+          <representation mediaType="application/json"/>
+        </response>
+        <response status="404 409">
+          <representation mediaType="application/json;charset=UTF-8"/>
+        </response>
+        <response status="201 202">
+          <representation mediaType="application/json;charset=UTF-8"/>
+        </response>
+      </method>
+    </resource>
+    <resource path="apptech/easypark/api/login" id="Public[Login]">
+      <doc xml:lang="en" title="Public[Login]"/>
+      <method name="POST" id="Login">
+        <doc xml:lang="en" title="Login"/>
+        <request>
+          <representation mediaType="application/json"/>
+        </request>
+        <response status="">
+          <representation mediaType="application/json"/>
+        </response>
+        <response status="401 404">
+          <representation mediaType="application/json;charset=UTF-8"/>
+        </response>
+        <response status="201">
+          <representation mediaType="application/json;charset=UTF-8"/>
+        </response>
+        <response status="200">
+          <representation mediaType=""/>
+          <representation mediaType=""/>
+        </response>
+      </method>
+    </resource>
+    <resource path="apptech/easypark/api/owner/list-agents" id="Owner[ListAgents]">
+      <doc xml:lang="en" title="Owner[ListAgents]"/>
+      <method name="GET" id="ListAgents">
+        <doc xml:lang="en" title="ListAgents"/>
+        <request/>
+        <response status="">
+          <representation mediaType="application/json"/>
+        </response>
+        <response status="401 404">
+          <representation mediaType="application/json;charset=UTF-8"/>
+        </response>
+        <response status="201">
+          <representation mediaType="application/json;charset=UTF-8"/>
+        </response>
+        <response status="200">
+          <representation mediaType=""/>
+          <representation mediaType=""/>
+        </response>
+      </method>
+    </resource>
+  </resources>
+</application>
