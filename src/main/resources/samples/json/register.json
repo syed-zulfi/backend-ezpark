@@ -1,0 +1,23 @@
+{
+   "_id":"59f199cf5a3d3c0a0869bb93",
+   "firstName":"jayant",
+   "middleName":"kumar",
+   "lastName":"mahto",
+   "email":"jayantkr83@gmail.com",
+   "mobile":"9742822077",
+   "username":"admin",
+   "password":"pwd",
+   "userType":"owner",
+   "address":[
+      {
+         "building":"#4",
+         "street":"2nd A main, mahadevpura",
+         "city":"bangalore",
+         "state":"karnataka",
+         "country":"india",
+         "pin":560048,
+         "_id":"59f199cf5a3d3c0a0869bb94"
+      }
+   ]
+   
+}
