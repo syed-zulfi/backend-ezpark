@@ -9,12 +9,12 @@ import javax.transaction.Transactional;
 import org.springframework.stereotype.Repository;
 
 import com.apptech.apps.easypark.constants.Fields;
-import com.apptech.apps.easypark.constants.Role;
 import com.apptech.apps.easypark.constants.Status;
 import com.apptech.apps.easypark.dao.entity.User;
 import com.apptech.apps.easypark.dao.infc.UserRepo;
 import com.apptech.apps.easypark.exceptions.ApplicationException;
 import com.apptech.apps.easypark.exceptions.UserExistException;
+import com.apptech.apps.easypark.security.config.Role;
 
 @Repository
 @Transactional

@@ -5,7 +5,6 @@ import com.apptech.apps.easypark.controllers.vo.UserDTO;
 
 public interface UserService {
 
-	ResponseDTO registerUser(UserDTO user);
 	ResponseDTO loginUser(String uname, String pwd);
 	ResponseDTO editUserDetails(UserDTO user);
 	ResponseDTO deleteUser(UserDTO user);

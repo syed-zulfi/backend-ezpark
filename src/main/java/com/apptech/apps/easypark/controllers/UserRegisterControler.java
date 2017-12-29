@@ -32,24 +32,22 @@ public class UserRegisterControler {
 	}
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public ResponseEntity<?> create(
-			@RequestBody UserDTO user, UriComponentsBuilder builder) {
-		ResponseDTO rdto = userService.register(RequestUtil.compileRole(user,
-				user.getUserType()));
+	public ResponseEntity<?> create(@RequestBody UserDTO user, UriComponentsBuilder builder) {
+		ResponseDTO rdto = userService.register(RequestUtil.synchRole(user));
 		return ResponseUtil.buildResponse(rdto);
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public ResponseEntity<?> login(@RequestParam String userId,
-			@RequestParam String passCode, UriComponentsBuilder builder) {
+	public ResponseEntity<?> login(@RequestParam String userId, @RequestParam String passCode,
+			UriComponentsBuilder builder) {
 		System.out.println(userId + " " + passCode);
 
 		return null;
 	}
 
 	@RequestMapping(value = "/validate/{field}", method = RequestMethod.GET)
-	public ResponseEntity<?> validate(@PathVariable String field,
-			@RequestParam String entry, UriComponentsBuilder builder) {
+	public ResponseEntity<?> validate(@PathVariable String field, @RequestParam String entry,
+			UriComponentsBuilder builder) {
 		ResponseDTO rdto = userService.validateFiled(entry, field);
 		return ResponseUtil.buildResponse(rdto);
 

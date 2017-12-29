@@ -47,17 +47,17 @@ public class UserServiceImp implements UserService {
 			log.info("User not found in the records, registering the user");
 			userRepo.createNewUser(User.buildDomainObject(user));
 			_resDto = ResponseUtil.createResponseDTO(ReturnCode.REGESTERED,
-					user);
+					user,false);
 			log.info("User registered completed");
 
 		} catch (UserExistException e) {
-			_resDto = ResponseUtil.createResponseDTO(ReturnCode.DECLINED, user);
+			_resDto = ResponseUtil.createResponseDTO(ReturnCode.DECLINED, user,true);
 			log.error("User already available in the records hence registration process declined for this user"
 					+ e);
 		} catch (ObjectCreationException | ApplicationException e) {
 			log.error("Some error occured during registratoin process" + e);
 			_resDto = ResponseUtil.createResponseDTO(
-					ReturnCode.APPLICATION_ERROR, user);
+					ReturnCode.APPLICATION_ERROR, user,true);
 			_resDto.createError();
 			_resDto.getError().setErrorCode(
 					ReturnCode.APPLICATION_ERROR.message());
@@ -65,7 +65,7 @@ public class UserServiceImp implements UserService {
 		return _resDto;
 	}
 
-	@Override
+/*	@Override
 	public ResponseDTO registerUser(UserDTO user) {
 		ResponseDTO _resDto = null;
 		try {
@@ -90,7 +90,7 @@ public class UserServiceImp implements UserService {
 		}
 		return _resDto;
 	}
-
+*/
 	@Override
 	public ResponseDTO loginUser(String uname, String pwd) {
 		ResponseDTO _resDto = ResponseDTO.create();
@@ -121,23 +121,23 @@ public class UserServiceImp implements UserService {
 				//userDao.emailExist(field);
 				userRepo.emailExist(field);
 				rdto = ResponseUtil.createResponseDTO(
-						ReturnCode.EMAIL_AVAILABLE, field);
+						ReturnCode.EMAIL_AVAILABLE, field,true);
 			} else if (type.equals(Fields.USERID.getType())) {
 				//userDao.userIdExists(field);
 				userRepo.userIdExists(field);
 				rdto = ResponseUtil.createResponseDTO(ReturnCode.UID_AVAILABLE,
-						field);
+						field,true);
 			} else {
 				rdto = ResponseUtil.createResponseDTO(ReturnCode.BAD_INPUT,
-						type);
+						type,true);
 			}
 		} catch (UserExistException e) {
 			if (e.getField().equals(Fields.EMAIL)) {
 				rdto = ResponseUtil.createResponseDTO(
-						ReturnCode.EMAIL_DUPLICATE, field);
+						ReturnCode.EMAIL_DUPLICATE, field,true);
 			} else {
 				rdto = ResponseUtil.createResponseDTO(
-						ReturnCode.UID_UNAVAILABLE, field);
+						ReturnCode.UID_UNAVAILABLE, field,true);
 			}
 			e.printStackTrace();
 		}

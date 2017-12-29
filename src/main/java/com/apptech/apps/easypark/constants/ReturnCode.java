@@ -11,7 +11,8 @@ public enum ReturnCode {
 	UID_UNAVAILABLE(HttpStatus.CONFLICT,"Duplicate user id"),
 	EMAIL_AVAILABLE(HttpStatus.ACCEPTED,"Email id available"),
 	EMAIL_DUPLICATE(HttpStatus.CONFLICT,"Duplicate email id"),
-	BAD_INPUT(HttpStatus.BAD_REQUEST,"Invalid input");
+	BAD_INPUT(HttpStatus.BAD_REQUEST,"Invalid input"),
+	SUCCESS(HttpStatus.OK,"Request processed successfully");
 	
 	
 	HttpStatus code;

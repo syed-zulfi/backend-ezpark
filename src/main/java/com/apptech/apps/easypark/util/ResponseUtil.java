@@ -46,12 +46,15 @@ public class ResponseUtil {
 	 * @param obj
 	 * @return
 	 */
-	public static ResponseDTO createResponseDTO(ReturnCode rc, Object obj) {
+	public static ResponseDTO createResponseDTO(ReturnCode rc, Object obj, boolean isObjInclude) {
 		ResponseDTO rdto = ResponseDTO.create();
 		rdto.setResponseMessage(rc.message());
 		rdto.setResponseCode(rc.code().value());
 		rdto.setHttpStatus(rc.code());
 		rdto.setResponseObject(null);
+		if(isObjInclude){
+			rdto.setResponseObject(obj);
+		}
 		return rdto;
 	}
 }
