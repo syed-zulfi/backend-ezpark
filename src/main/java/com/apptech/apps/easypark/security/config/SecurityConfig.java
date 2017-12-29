@@ -39,10 +39,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().antMatchers("/", "/public/*").permitAll();
-		http.authorizeRequests().antMatchers("/owner/**").hasAuthority(Role.ROLE_OWNER.name());
-		http.authorizeRequests().antMatchers("/admin/**").hasAuthority(Role.ROLE_ADMIN.name());
-		http.authorizeRequests().antMatchers("/agent/**").hasAuthority(Role.ROLE_AGENT.name()).and()
+		http.authorizeRequests().antMatchers(Role.PUBLIC.getUrlNS()).permitAll();
+		http.authorizeRequests().antMatchers(Role.OWNER.getUrlNS()).hasAnyAuthority(Role.OWNER.getRole(),
+				Role.ADMIN.getRole());
+		http.authorizeRequests().antMatchers(Role.ADMIN.getUrlNS()).hasAuthority(Role.ADMIN.getRole());
+		http.authorizeRequests().antMatchers(Role.AGENT.getUrlNS())
+				.hasAnyAuthority(Role.ADMIN.getRole(), Role.OWNER.getRole(), Role.AGENT.getRole()).and()
 				.addFilter(FilterFactory.createFilter(Filters.AUTHENTICATE, authenticationManager(), jwt,
 						loginUserService))
 				.addFilter(FilterFactory.createFilter(Filters.AUTHORISE, authenticationManager(), jwt, null));

@@ -17,14 +17,14 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import com.apptech.apps.easypark.constants.AppConstants;
 import com.apptech.apps.easypark.constants.Status;
 import com.apptech.apps.easypark.controllers.vo.AddressDTO;
 import com.apptech.apps.easypark.controllers.vo.UserDTO;
 import com.apptech.apps.easypark.exceptions.ObjectCreationException;
 
 @Entity
-@Table(name = "USER", uniqueConstraints = {
-		@UniqueConstraint(columnNames = "ID"),
+@Table(name = "USER", uniqueConstraints = { @UniqueConstraint(columnNames = "ID"),
 		@UniqueConstraint(columnNames = "USER_NAME") })
 public class User extends BaseEntity implements Serializable, UserDetails {
 
@@ -96,7 +96,6 @@ public class User extends BaseEntity implements Serializable, UserDetails {
 		this.email = email;
 	}
 
-
 	public void setUsername(String username) {
 		this.username = username;
 	}
@@ -127,10 +126,9 @@ public class User extends BaseEntity implements Serializable, UserDetails {
 
 	@Override
 	public String toString() {
-		return "User [firstName=" + firstName + ", lastName=" + lastName
-				+ ", middleName=" + middleName + ", email=" + email
-				+ ", username=" + username + ", password=" + password + ", mobile="
-				+ mobile + ", address=" + address + ", role=" + role + "]";
+		return "User [firstName=" + firstName + ", lastName=" + lastName + ", middleName=" + middleName + ", email="
+				+ email + ", username=" + username + ", password=" + password + ", mobile=" + mobile + ", address="
+				+ address + ", role=" + role + "]";
 	}
 
 	/**
@@ -139,8 +137,7 @@ public class User extends BaseEntity implements Serializable, UserDetails {
 	 * @return
 	 * @throws ObjectCreationException
 	 */
-	public static User buildDomainObject(UserDTO uDTO)
-			throws ObjectCreationException {
+	public static User buildDomainObject(UserDTO uDTO) throws ObjectCreationException {
 		try {
 			User user = new User();
 			user.setUsername(uDTO.getUsername());
@@ -149,8 +146,7 @@ public class User extends BaseEntity implements Serializable, UserDetails {
 			user.setMiddleName(uDTO.getMiddleName());
 			user.setLastName(uDTO.getLastName());
 			user.setMobile(uDTO.getMobile());
-			user.setPassword(new BCryptPasswordEncoder().encode(uDTO
-					.getPassword()));
+			user.setPassword(new BCryptPasswordEncoder().encode(uDTO.getPassword()));
 			user.setStatus(Status.ACTIVE.toString());
 			user.setRole(uDTO.getUserType());
 			for (AddressDTO aDTO : uDTO.getAddress()) {
@@ -160,8 +156,7 @@ public class User extends BaseEntity implements Serializable, UserDetails {
 			}
 			return user;
 		} catch (Exception e) {
-			throw new ObjectCreationException(
-					"Exception occured while cration user domain object", e);
+			throw new ObjectCreationException("Exception occured while cration user domain object", e);
 		}
 	}
 
@@ -171,15 +166,11 @@ public class User extends BaseEntity implements Serializable, UserDetails {
 		int result = 1;
 		result = prime * result + ((address == null) ? 0 : address.hashCode());
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
-		result = prime * result
-				+ ((firstName == null) ? 0 : firstName.hashCode());
-		result = prime * result
-				+ ((lastName == null) ? 0 : lastName.hashCode());
-		result = prime * result
-				+ ((middleName == null) ? 0 : middleName.hashCode());
+		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
+		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
+		result = prime * result + ((middleName == null) ? 0 : middleName.hashCode());
 		result = prime * result + ((mobile == null) ? 0 : mobile.hashCode());
-		result = prime * result
-				+ ((password == null) ? 0 : password.hashCode());
+		result = prime * result + ((password == null) ? 0 : password.hashCode());
 		result = prime * result + ((role == null) ? 0 : role.hashCode());
 		result = prime * result + ((username == null) ? 0 : username.hashCode());
 		return result;
@@ -240,10 +231,9 @@ public class User extends BaseEntity implements Serializable, UserDetails {
 	}
 
 	public UserDetails createUserSecurityDetails() {
-		GrantedAuthority gAthority = new SimpleGrantedAuthority(this.getRole()
-				.toString());
-		UserDetails userDetails = new org.springframework.security.core.userdetails.User(
-				this.username, this.password, Arrays.asList(gAthority));
+		GrantedAuthority gAthority = new SimpleGrantedAuthority(this.getRole().toString());
+		UserDetails userDetails = new org.springframework.security.core.userdetails.User(this.username, this.password,
+				Arrays.asList(gAthority));
 
 		return userDetails;
 	}
@@ -251,14 +241,11 @@ public class User extends BaseEntity implements Serializable, UserDetails {
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		Set<GrantedAuthority> authorities = new HashSet<GrantedAuthority>();
-		GrantedAuthority gAthority = new SimpleGrantedAuthority(this.getRole()
-				.toString());
+		GrantedAuthority gAthority = new SimpleGrantedAuthority(this.getRole().toString());
 		authorities.add(gAthority);
 
 		return authorities;
 	}
-
-	
 
 	public String getUsername() {
 		return username;
@@ -272,24 +259,21 @@ public class User extends BaseEntity implements Serializable, UserDetails {
 
 	@Override
 	public boolean isAccountNonLocked() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean isCredentialsNonExpired() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean isEnabled() {
-		// TODO Auto-generated method stub
 		return false;
 	}
-	
-	public String getFullName(){
-		return this.firstName+" "+this.lastName;
+
+	public String getFullName() {
+		return this.firstName + AppConstants.SPACE + this.middleName + AppConstants.SPACE + this.lastName;
 	}
 
 }

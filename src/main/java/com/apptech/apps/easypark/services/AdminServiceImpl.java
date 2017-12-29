@@ -8,13 +8,14 @@ import org.springframework.stereotype.Component;
 import com.apptech.apps.easypark.constants.ReturnCode;
 import com.apptech.apps.easypark.controllers.vo.ResponseDTO;
 import com.apptech.apps.easypark.dao.infc.UserRepo;
+import com.apptech.apps.easypark.services.infc.AdminServices;
 import com.apptech.apps.easypark.services.infc.OwnerServices;
 import com.apptech.apps.easypark.util.ResponseUtil;
 
 @Component
-public class OwnerServiceImpl implements OwnerServices {
+public class AdminServiceImpl implements AdminServices {
 
-	private static final Logger log = LoggerFactory.getLogger(OwnerServiceImpl.class);
+	private static final Logger log = LoggerFactory.getLogger(AdminServiceImpl.class);
 
 	private UserRepo userRepo;
 
@@ -24,7 +25,7 @@ public class OwnerServiceImpl implements OwnerServices {
 	}
 
 	@Override
-	public ResponseDTO listAgents() {
+	public ResponseDTO listOwners() {
 		ResponseDTO rDTO = ResponseUtil.createResponseDTO(ReturnCode.SUCCESS, null, false);
 		return rDTO;
 	}

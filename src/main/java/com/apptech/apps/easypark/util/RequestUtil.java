@@ -12,13 +12,13 @@ public class RequestUtil {
 	public static UserDTO synchRole(UserDTO userDto) {
 		switch (userDto.getUserType()) {
 		case OWNER:
-			userDto.setUserType(Role.ROLE_OWNER.name());
+			userDto.setUserType(Role.OWNER.getRole());
 			break;
 		case ADMIN:
-			userDto.setUserType(Role.ROLE_ADMIN.name());
+			userDto.setUserType(Role.ADMIN.getRole());
 			break;
 		case AGENT:
-			userDto.setUserType(Role.ROLE_AGENT.name());
+			userDto.setUserType(Role.AGENT.getRole());
 			break;
 		}
 		return userDto;

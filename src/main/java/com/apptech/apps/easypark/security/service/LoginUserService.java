@@ -33,6 +33,7 @@ public class LoginUserService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String userid) throws UsernameNotFoundException {
 		try {
+			log.info("Retrieving details corresponding to userid "+userid);
 			user = userRepo.loadUserByUserId(userid);
 		} catch (ApplicationException e) {
 			throw new UsernameNotFoundException("User not found");
