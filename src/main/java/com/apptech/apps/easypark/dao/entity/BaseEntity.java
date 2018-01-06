@@ -23,8 +23,6 @@ public abstract class BaseEntity {
 	@Column(name = "VERSION")
 	protected int version;
 	
-	@Column(name = "STATUS")
-	protected String status;
 	
 	public Long getId() {
 		return id;
@@ -51,23 +49,5 @@ public abstract class BaseEntity {
 	public void setVersion(int version) {
 		this.version = version;
 	}
-	
-	
-
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
-
-	@Override
-	public String toString() {
-		return "BaseEntity [id=" + id + ", createDate=" + createDate
-				+ ", version=" + version + ", status=" + status + "]";
-	}
-
-	
 
 }

@@ -31,6 +31,7 @@ public class UserDAOImp implements UserDAO {
 
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public User loadUserByUserId(String userid) {
 		Session session = HibernateUtil.getHSessionFactory().openSession();

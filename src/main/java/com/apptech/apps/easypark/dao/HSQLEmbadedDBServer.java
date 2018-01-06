@@ -44,10 +44,12 @@ public class HSQLEmbadedDBServer {
 			this.hsqProp = hsqProp;
 		}
 
+		@SuppressWarnings("unused")
 		public String hsqEntry() {
 			return hsqEntry;
 		}
 
+		@SuppressWarnings("unused")
 		public String hsqProp() {
 			return hsqProp;
 		}

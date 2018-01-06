@@ -8,6 +8,8 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -47,10 +49,19 @@ public class User extends BaseEntity implements Serializable, UserDetails {
 	private String password;
 	@Column(name = "MOBILE")
 	private String mobile;
+	@Column(name = "STATUS")
+	private String status;
 	@OneToMany(mappedBy = "user")
 	private Set<Address> address = new HashSet<Address>();
 	@Column(name = "ROLE")
 	String role;
+	@OneToMany(mappedBy = "lctnOwner")
+	private Set<ParkLocation> parkLocations = new HashSet<ParkLocation>();
+	@ManyToOne
+	@JoinColumn(name = "OWNER_ID")
+	private User owner;
+	@OneToMany(mappedBy = "owner")
+	private Set<User> agents = new HashSet<User>();
 
 	private User() {
 
@@ -124,6 +135,14 @@ public class User extends BaseEntity implements Serializable, UserDetails {
 		this.role = role;
 	}
 
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
 	@Override
 	public String toString() {
 		return "User [firstName=" + firstName + ", lastName=" + lastName + ", middleName=" + middleName + ", email="
@@ -173,6 +192,8 @@ public class User extends BaseEntity implements Serializable, UserDetails {
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
 		result = prime * result + ((role == null) ? 0 : role.hashCode());
 		result = prime * result + ((username == null) ? 0 : username.hashCode());
+		result = prime * result + ((status == null) ? 0 : status.hashCode());
+
 		return result;
 	}
 
@@ -227,6 +248,12 @@ public class User extends BaseEntity implements Serializable, UserDetails {
 				return false;
 		} else if (!username.equals(other.username))
 			return false;
+		if (status == null) {
+			if (other.status != null)
+				return false;
+		} else if (!status.equals(other.status))
+			return false;
+
 		return true;
 	}
 
