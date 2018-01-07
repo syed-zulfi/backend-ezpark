@@ -15,7 +15,7 @@ import javax.persistence.UniqueConstraint;
 @Entity
 @Table(name = "PARKING_LOCATION",
 	   uniqueConstraints = { @UniqueConstraint(columnNames = "ID"),
-			   				 @UniqueConstraint(columnNames = "LOCATION_ID")})
+			   				 @UniqueConstraint(columnNames = "LOCTN_ID")})
 public class ParkLocation extends BaseEntity implements Serializable{
 	/**
 	 * 

@@ -1,9 +1,9 @@
 package com.apptech.apps.easypark.dao.entity;
 
 import java.io.Serializable;
-import java.sql.Date;
 import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -17,11 +17,18 @@ import javax.persistence.UniqueConstraint;
     		   				 @UniqueConstraint(columnNames = "SPACE_ID")
                            })
 public class ParkSpace extends BaseEntity implements Serializable{
-
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8801350073253036241L;
+	@Column(name = "SPACE_ID")
 	private String spaceID;
+	@Column(name = "SPACE_FOR")
 	private Vehicle spaceFOR;
+	@Column(name = "SPACE_STATUS")
 	private Status spaceSTATUS;
-	private Double   spaceCharge;
+	@Column(name = "SPACE_CHRGE_PER_HOUR")
+	private Double   spaceChargePerHour;
 	@ManyToOne
 	@JoinColumn(name = "LOCATION_ID")
 	private ParkLocation spaceLCTN;
