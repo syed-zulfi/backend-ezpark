@@ -34,8 +34,8 @@ public class UserDTO {
 	private List<AddressDTO> address = null;
 	@JsonIgnore
 	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
-    
-	private String role;
+	@JsonProperty("ownerId")
+	private String ownerID;
 	
 	@JsonProperty("firstName")
 	public String getFirstName() {
@@ -137,14 +137,16 @@ public class UserDTO {
 		this.additionalProperties.put(name, value);
 	}
 
-	public String getRole() {
-		return role;
+	@JsonProperty("ownerId")
+	public String getOwnerID() {
+		return ownerID;
 	}
 
-	public void setRole(String role) {
-		this.role = role;
+	@JsonProperty("ownerId")
+	public void setOwnerID(String ownerID) {
+		this.ownerID = ownerID;
 	}
-	
+
 	
 
 }

@@ -13,7 +13,7 @@ public class ResponseUtil {
 			return new ResponseEntity<ResponseDTO>(rdto, rdto.getHttpStatus());
 		} else {
 			return new ResponseEntity<ResponseDTO>(rdto,
-					HttpStatus.INTERNAL_SERVER_ERROR);
+					rdto.getHttpStatus());
 		}
 
 	}

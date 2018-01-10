@@ -6,10 +6,15 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.impl.TextCodec;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.security.core.GrantedAuthority;
 
 import com.apptech.apps.easypark.dao.entity.User;
 import com.apptech.apps.easypark.security.config.TKNClaims;
@@ -51,6 +56,14 @@ public abstract class SecurityUtil {
 		claims.put(TKNClaims.EMAIL.val(), publicClaims.get(TKNClaims.EMAIL.val()));
 		claims.put(TKNClaims.ROLE.val(), publicClaims.get(TKNClaims.ROLE.val()));
 		return claims;
+	}
+	
+	public static List<String> rolesToStringList(Collection<? extends GrantedAuthority> collection){
+		 List<String> authList = new ArrayList<String>();
+		 for(Object t:collection){
+			 authList.add(t.toString());
+		 }
+		return authList;
 	}
 
 }

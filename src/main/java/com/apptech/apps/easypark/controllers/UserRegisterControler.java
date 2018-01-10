@@ -33,7 +33,7 @@ public class UserRegisterControler {
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public ResponseEntity<?> create(@RequestBody UserDTO user, UriComponentsBuilder builder) {
-		ResponseDTO rdto = userService.register(RequestUtil.synchRole(user));
+		ResponseDTO rdto = userService.register(user);
 		return ResponseUtil.buildResponse(rdto);
 	}
 

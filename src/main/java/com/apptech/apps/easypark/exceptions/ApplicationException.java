@@ -11,6 +11,8 @@ public class ApplicationException extends Exception {
 	public ApplicationException(String messg, Throwable ex){
 		super(messg, ex);
 	}
-	
+	public ApplicationException(String messg){
+		super(messg);
+	}
 	
 }

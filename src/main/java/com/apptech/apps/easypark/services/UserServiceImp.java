@@ -1,5 +1,6 @@
 package com.apptech.apps.easypark.services;
 
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +14,12 @@ import com.apptech.apps.easypark.controllers.vo.UserDTO;
 import com.apptech.apps.easypark.dao.entity.User;
 import com.apptech.apps.easypark.dao.infc.UserDAO;
 import com.apptech.apps.easypark.dao.infc.UserRepo;
+import com.apptech.apps.easypark.exceptions.AccessDeniedException;
 import com.apptech.apps.easypark.exceptions.ApplicationException;
 import com.apptech.apps.easypark.exceptions.ObjectCreationException;
 import com.apptech.apps.easypark.exceptions.UserExistException;
 import com.apptech.apps.easypark.services.infc.UserService;
+import com.apptech.apps.easypark.util.RequestUtil;
 import com.apptech.apps.easypark.util.ResponseUtil;
 
 @Component
@@ -43,6 +46,7 @@ public class UserServiceImp implements UserService {
 	public ResponseDTO register(UserDTO user) {
 		ResponseDTO _resDto = null;
 		try {
+			user = RequestUtil.synchRole(user);
 			userRepo.userIdExists(user.getUsername());
 			log.info("User not found in the records, registering the user");
 			userRepo.createNewUser(User.buildDomainObject(user));
@@ -52,6 +56,11 @@ public class UserServiceImp implements UserService {
 
 		} catch (UserExistException e) {
 			_resDto = ResponseUtil.createResponseDTO(ReturnCode.DECLINED, user,true);
+			_resDto = ResponseUtil.createResponseDTO(
+					ReturnCode.DECLINED, user,true);
+			_resDto.createError();
+			_resDto.getError().setErrorCode(
+					ReturnCode.DECLINED.message());
 			log.error("User already available in the records hence registration process declined for this user"
 					+ e);
 		} catch (ObjectCreationException | ApplicationException e) {
@@ -61,6 +70,15 @@ public class UserServiceImp implements UserService {
 			_resDto.createError();
 			_resDto.getError().setErrorCode(
 					ReturnCode.APPLICATION_ERROR.message());
+			_resDto.getError().setErrorDescription(e.getMessage());
+		} catch (AccessDeniedException e) {
+			log.error("Some error occured during registratoin process" + e);
+			_resDto = ResponseUtil.createResponseDTO(
+					ReturnCode.FORBID_ACCESS, user,true);
+			_resDto.createError();
+			_resDto.getError().setErrorCode(
+					ReturnCode.FORBID_ACCESS.message());
+			_resDto.getError().setErrorDescription(e.getMessage());
 		}
 		return _resDto;
 	}

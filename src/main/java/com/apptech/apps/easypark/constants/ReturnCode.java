@@ -7,6 +7,7 @@ public enum ReturnCode {
 	REGESTERED(HttpStatus.CREATED,"User Created"),
 	DECLINED(HttpStatus.CONFLICT, "User already registered"),
 	APPLICATION_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "Application Error"),
+	FORBID_ACCESS(HttpStatus.FORBIDDEN,"Access denied"),
 	UID_AVAILABLE(HttpStatus.ACCEPTED,"User id available"),
 	UID_UNAVAILABLE(HttpStatus.CONFLICT,"Duplicate user id"),
 	EMAIL_AVAILABLE(HttpStatus.ACCEPTED,"Email id available"),
