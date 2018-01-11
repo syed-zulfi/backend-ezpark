@@ -9,8 +9,12 @@ public interface UserRepo {
 	void createNewUser(User user) throws ApplicationException;
 
 	User loadUserByUserId(String userid) throws ApplicationException;
+	
+	User loadUserByRedId(long rid) throws ApplicationException;
 
 	void emailExist(String email) throws UserExistException;
 
 	void userIdExists(String userid) throws UserExistException;;
+	
+	
 }

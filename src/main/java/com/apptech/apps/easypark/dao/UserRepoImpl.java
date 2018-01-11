@@ -34,12 +34,10 @@ public class UserRepoImpl implements UserRepo {
 	@Override
 	public User loadUserByUserId(String userid) throws ApplicationException {
 		String status = Status.ACTIVE.toString();
-		System.out.println("ISer idddddddd" + userid);
 		List<?> resultList = eManager
 				.createQuery("SELECT u FROM User u where u.username=? and u.status=?")
 				.setParameter(1, userid).setParameter(2, status).getResultList();
 		if (!resultList.isEmpty()) {
-			System.out.println("USer object"+resultList.get(0).toString());
 			return (User) resultList.get(0);
 		} else {
 			throw new ApplicationException(
@@ -69,6 +67,20 @@ public class UserRepoImpl implements UserRepo {
 		if (resultList.get(0) > 0L) {
 			throw new UserExistException(UserExistException.USERID_EXIST,
 					Fields.USERID);
+		}
+	}
+
+	@Override
+	public User loadUserByRedId(long rid) throws ApplicationException {
+		String status = Status.ACTIVE.toString();
+		List<?> resultList = eManager
+				.createQuery("SELECT u FROM User u where u.id=? and u.status=?")
+				.setParameter(1, rid).setParameter(2, status).getResultList();
+		if (!resultList.isEmpty()) {
+			return (User) resultList.get(0);
+		} else {
+			throw new ApplicationException(
+					"User not found with provided record id or user is disable", null);
 		}
 	}
 

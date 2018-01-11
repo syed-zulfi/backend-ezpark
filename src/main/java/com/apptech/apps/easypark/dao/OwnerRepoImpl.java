@@ -1,6 +1,7 @@
 package com.apptech.apps.easypark.dao;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -27,12 +28,10 @@ public class OwnerRepoImpl implements  OwnerRepo{
 
 	public User loadUserByUserId(String userid) throws ApplicationException {
 		String status = Status.ACTIVE.toString();
-		System.out.println("ISer idddddddd" + userid);
 		List<?> resultList = eManager
 				.createQuery("SELECT u FROM User u where u.username=? and u.status=?")
 				.setParameter(1, userid).setParameter(2, status).getResultList();
 		if (!resultList.isEmpty()) {
-			System.out.println("USer object"+resultList.get(0).toString());
 			return (User) resultList.get(0);
 		} else {
 			throw new ApplicationException(
@@ -42,9 +41,15 @@ public class OwnerRepoImpl implements  OwnerRepo{
 	}
 
 	@Override
-	public List<User> listAgents(long ownerId) {
-		// TODO Auto-generated method stub
-		return null;
+	public Set<User> listAgents(long ownerId) throws ApplicationException {
+		User owner= eManager.find(User.class, ownerId) ;
+		if (null!=owner) {
+			return owner.getAgents();
+		} else {
+			throw new ApplicationException(
+					"Owner not loaded or not found", null);
+		}
+
 	}
 
 	@Override
@@ -54,9 +59,31 @@ public class OwnerRepoImpl implements  OwnerRepo{
 	}
 
 	@Override
-	public User getAgentById(long agentId) {
-		// TODO Auto-generated method stub
-		return null;
+	public User getAgentById(long agentId) throws ApplicationException {
+		String status = Status.ACTIVE.toString();
+		List<?> resultList = eManager
+				.createQuery("SELECT u FROM User u where u.username=? and u.status=?")
+				.setParameter(1, agentId).setParameter(2, status).getResultList();
+		if (!resultList.isEmpty()) {
+			return (User) resultList.get(0);
+		} else {
+			throw new ApplicationException(
+					"User not found with provided user id", null);
+		}
+	}
+
+	@Override
+	public User loadOwnerByRecId(long id) throws ApplicationException {
+		String status = Status.ACTIVE.toString();
+		List<?> resultList = eManager
+				.createQuery("SELECT u FROM User u where u.id=? and u.status=?")
+				.setParameter(1, id).setParameter(2, status).getResultList();
+		if (!resultList.isEmpty()) {
+			return (User) resultList.get(0);
+		} else {
+			throw new ApplicationException(
+					"User not found with provided id or user is not yet enabled", null);
+		}
 	}
 
 }

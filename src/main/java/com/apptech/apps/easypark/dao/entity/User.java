@@ -6,8 +6,10 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -51,7 +53,7 @@ public class User extends BaseEntity implements Serializable, UserDetails {
 	private String mobile;
 	@Column(name = "STATUS")
 	private String status;
-	@OneToMany(mappedBy = "user")
+	@OneToMany(mappedBy = "user",cascade=CascadeType.PERSIST, fetch=FetchType.LAZY)
 	private Set<Address> address = new HashSet<Address>();
 	@Column(name = "ROLE")
 	String role;
@@ -60,7 +62,23 @@ public class User extends BaseEntity implements Serializable, UserDetails {
 	@ManyToOne
 	@JoinColumn(name = "OWNER_ID")
 	private User owner;
-	@OneToMany(mappedBy = "owner")
+	public User getOwner() {
+		return owner;
+	}
+
+	public void setOwner(User owner) {
+		this.owner = owner;
+	}
+
+	public Set<User> getAgents() {
+		return agents;
+	}
+
+	public void setAgents(Set<User> agents) {
+		this.agents = agents;
+	}
+
+	@OneToMany(mappedBy = "owner", cascade=CascadeType.PERSIST)
 	private Set<User> agents = new HashSet<User>();
 
 	private User() {

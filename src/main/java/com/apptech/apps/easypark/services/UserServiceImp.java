@@ -10,13 +10,14 @@ import com.apptech.apps.easypark.constants.Fields;
 import com.apptech.apps.easypark.constants.ReturnCode;
 import com.apptech.apps.easypark.controllers.vo.ResponseDTO;
 import com.apptech.apps.easypark.controllers.vo.UserDTO;
+import com.apptech.apps.easypark.dao.entity.Address;
 import com.apptech.apps.easypark.dao.entity.User;
-import com.apptech.apps.easypark.dao.infc.UserDAO;
 import com.apptech.apps.easypark.dao.infc.UserRepo;
 import com.apptech.apps.easypark.exceptions.AccessDeniedException;
 import com.apptech.apps.easypark.exceptions.ApplicationException;
 import com.apptech.apps.easypark.exceptions.ObjectCreationException;
 import com.apptech.apps.easypark.exceptions.UserExistException;
+import com.apptech.apps.easypark.security.config.Role;
 import com.apptech.apps.easypark.services.infc.UserService;
 import com.apptech.apps.easypark.util.RequestUtil;
 import com.apptech.apps.easypark.util.ResponseUtil;
@@ -25,14 +26,7 @@ import com.apptech.apps.easypark.util.ResponseUtil;
 public class UserServiceImp implements UserService {
 
 	private static final Logger log = LoggerFactory.getLogger(UserServiceImp.class);
-	private UserDAO userDao;
 	private UserRepo userRepo;
-
-	@Autowired
-	@Qualifier("userDAOImp")
-	public void setUserDao(UserDAO userDao) {
-		this.userDao = userDao;
-	}
 
 	@Autowired
 	@Qualifier("userRepoImpl")
@@ -46,10 +40,21 @@ public class UserServiceImp implements UserService {
 		try {
 			user = RequestUtil.synchRole(user);
 			userRepo.userIdExists(user.getUsername());
-			log.info("User not found in the records, registering the user");
-			userRepo.createNewUser(User.buildDomainObject(user));
+			log.info("User id available for registration...");
+			if (user.getUserType().equals(Role.AGENT.getRole())) {
+				User owner = userRepo.loadUserByRedId(Long.parseLong(user.getOwnerID()));
+				System.out.println("Owner"+owner.toString());
+				for(Address adr :  owner.getAddress()){
+					System.out.println("Owner Address"+adr.toString());
+				}
+				User agent = User.buildDomainObject(user);
+				agent.setOwner(owner);
+				userRepo.createNewUser(agent);
+			} else {
+				userRepo.createNewUser(User.buildDomainObject(user));
+			}
 			_resDto = ResponseUtil.createResponseDTO(ReturnCode.REGESTERED, user, false);
-			log.info("User registered completed");
+			log.info("User registration completed");
 
 		} catch (UserExistException e) {
 			_resDto = ResponseUtil.createResponseDTO(ReturnCode.DECLINED, user, true);
