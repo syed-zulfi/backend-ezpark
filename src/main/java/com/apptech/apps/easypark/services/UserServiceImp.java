@@ -18,6 +18,9 @@ import com.apptech.apps.easypark.exceptions.ApplicationException;
 import com.apptech.apps.easypark.exceptions.ObjectCreationException;
 import com.apptech.apps.easypark.exceptions.UserExistException;
 import com.apptech.apps.easypark.security.config.Role;
+import com.apptech.apps.easypark.security.config.Settings;
+import com.apptech.apps.easypark.security.config.TKNClaims;
+import com.apptech.apps.easypark.security.factory.SecurityUtil;
 import com.apptech.apps.easypark.services.infc.UserService;
 import com.apptech.apps.easypark.util.RequestUtil;
 import com.apptech.apps.easypark.util.ResponseUtil;
@@ -33,16 +36,23 @@ public class UserServiceImp implements UserService {
 	public void setUserRepo(UserRepo userRepo) {
 		this.userRepo = userRepo;
 	}
+	private Settings jwt;
+
+	@Autowired
+	public void setJwt(Settings jwt) {
+		this.jwt = jwt;
+	}
 
 	@Override
-	public ResponseDTO register(UserDTO user) {
+	public ResponseDTO register(UserDTO user,String token) {
 		ResponseDTO _resDto = null;
 		try {
 			user = RequestUtil.synchRole(user);
 			userRepo.userIdExists(user.getUsername());
 			log.info("User id available for registration...");
 			if (user.getUserType().equals(Role.AGENT.getRole())) {
-				User owner = userRepo.loadUserByRedId(Long.parseLong(user.getOwnerID()));
+				String id = (String) SecurityUtil.readFieldFromClaim(TKNClaims.ID, token, jwt);
+				User owner = userRepo.loadUserByRedId(Long.parseLong(id));
 				System.out.println("Owner"+owner.toString());
 				for(Address adr :  owner.getAddress()){
 					System.out.println("Owner Address"+adr.toString());

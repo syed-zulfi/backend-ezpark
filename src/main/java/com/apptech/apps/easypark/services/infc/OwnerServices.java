@@ -4,5 +4,5 @@ import com.apptech.apps.easypark.controllers.vo.ResponseDTO;
 
 public interface OwnerServices {
 
-	ResponseDTO listAgents();
+	ResponseDTO getAgents(String token);
 }

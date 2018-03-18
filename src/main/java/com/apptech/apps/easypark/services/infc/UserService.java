@@ -9,6 +9,6 @@ public interface UserService {
 	ResponseDTO editUserDetails(UserDTO user);
 	ResponseDTO deleteUser(UserDTO user);
 	ResponseDTO validateFiled(String filed, String type);
-	ResponseDTO register(UserDTO user);
+	ResponseDTO register(UserDTO user,String token);
 	ResponseDTO login(String uid, String pwd);
 }

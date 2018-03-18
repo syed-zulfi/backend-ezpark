@@ -1,15 +1,23 @@
 package com.apptech.apps.easypark.controllers.vo;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
+
 import org.springframework.http.HttpStatus;
 
-public class ResponseDTO {
+public class ResponseDTO implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2273903276473657462L;
 	private String responseMessage;
 	private Integer responseCode;
 	private HttpStatus httpStatus;
 
 	private Error error;
-	private Object responseObject;
+	private Object responseData;
 
 	public HttpStatus getHttpStatus() {
 		return httpStatus;
@@ -36,14 +44,14 @@ public class ResponseDTO {
 		this.responseCode = responseCode;
 	}
 
-	public Object getResponseObject() {
-		return responseObject;
-	}
+	 
 
-	public void setResponseObject(Object responseObject) {
-		this.responseObject = responseObject;
+	public Object getResponseData() {
+		return responseData;
 	}
-
+	public void setResponseData(Object responseData) {
+		this.responseData = responseData;
+	}
 	public void createError() {
 		Error error = new Error();
 		this.error=error;
@@ -74,6 +82,8 @@ public class ResponseDTO {
 		}
 
 	}
+	 
+	
 	
 	public static ResponseDTO create(){
 		return new ResponseDTO();

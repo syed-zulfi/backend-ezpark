@@ -4,9 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -26,9 +26,10 @@ public class OwnerController {
 		this.ownerService = ownerService;
 	}
 
-	@RequestMapping(value = "/list-agents", method = RequestMethod.GET)
-	public ResponseEntity<?> login(@RequestParam String ownerId, UriComponentsBuilder builder) {
-		ResponseDTO rDTO = ownerService.listAgents();
+	@RequestMapping(value = "/agents", method = RequestMethod.GET)
+	public ResponseEntity<?> getAgents(@RequestHeader("Authorization") String authorization,UriComponentsBuilder builder) {
+		 
+		ResponseDTO rDTO = ownerService.getAgents(authorization);
 		return ResponseUtil.buildResponse(rDTO);
 	}
 }

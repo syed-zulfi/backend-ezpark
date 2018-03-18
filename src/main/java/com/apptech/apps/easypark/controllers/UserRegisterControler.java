@@ -1,5 +1,8 @@
 package com.apptech.apps.easypark.controllers;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.core.Context;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +18,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 import com.apptech.apps.easypark.controllers.vo.ResponseDTO;
 import com.apptech.apps.easypark.controllers.vo.UserDTO;
 import com.apptech.apps.easypark.services.infc.UserService;
-import com.apptech.apps.easypark.util.RequestUtil;
 import com.apptech.apps.easypark.util.ResponseUtil;
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -24,7 +26,10 @@ import com.apptech.apps.easypark.util.ResponseUtil;
 public class UserRegisterControler {
 
 	private UserService userService;
-
+    private final String AUTH="Authorization";
+	
+	
+	 
 	@Autowired
 	@Qualifier("userServiceImp")
 	public void setUserService(UserService userService) {
@@ -32,8 +37,9 @@ public class UserRegisterControler {
 	}
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public ResponseEntity<?> create(@RequestBody UserDTO user, UriComponentsBuilder builder) {
-		ResponseDTO rdto = userService.register(user);
+	public ResponseEntity<?> create(@Context HttpServletRequest req,   @RequestBody UserDTO user, UriComponentsBuilder builder) {
+		String token = req.getHeader(AUTH);
+		ResponseDTO rdto = userService.register(user,token);
 		return ResponseUtil.buildResponse(rdto);
 	}
 

@@ -1,7 +1,6 @@
 package com.apptech.apps.easypark.security.filters;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.stream.Collectors;
@@ -11,9 +10,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang3.ObjectUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -24,10 +20,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 import com.apptech.apps.easypark.constants.AppConstants;
-import com.apptech.apps.easypark.security.config.TKNClaims;
-import com.apptech.apps.easypark.util.RequestUtil;
-import com.apptech.apps.easypark.security.config.Role;
 import com.apptech.apps.easypark.security.config.Settings;
+import com.apptech.apps.easypark.security.config.TKNClaims;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

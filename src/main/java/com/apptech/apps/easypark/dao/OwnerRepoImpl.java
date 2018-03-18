@@ -44,7 +44,12 @@ public class OwnerRepoImpl implements  OwnerRepo{
 	public Set<User> listAgents(long ownerId) throws ApplicationException {
 		User owner= eManager.find(User.class, ownerId) ;
 		if (null!=owner) {
-			return owner.getAgents();
+			Set<User> agents = owner.getAgents();
+			if(agents.isEmpty()){
+				throw new ApplicationException(
+						"No agents found corresponding to owner id "+ownerId, null);
+			}
+			return agents;
 		} else {
 			throw new ApplicationException(
 					"Owner not loaded or not found", null);

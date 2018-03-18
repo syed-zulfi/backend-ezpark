@@ -2,6 +2,8 @@ package com.apptech.apps.easypark.controllers.vo;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import com.apptech.apps.easypark.dao.entity.Address;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -98,4 +100,15 @@ public class AddressDTO {
 		this.additionalProperties.put(name, value);
 	}
 
+	public static AddressDTO populateAddressDTO(Address addr){
+		AddressDTO address = new AddressDTO();
+		address.setBuilding(addr.getBuilding());
+		address.setCity(addr.getCity());
+		address.setCountry(addr.getCountry());
+		address.setPin(addr.getPin());
+		address.setStreet(addr.getStreet());
+		address.setState(addr.getState());
+		
+		return address;
+	}
 }

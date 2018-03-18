@@ -2,7 +2,6 @@ package com.apptech.apps.easypark.util;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.apptech.apps.easypark.constants.ReturnCode;
 import com.apptech.apps.easypark.controllers.vo.ResponseDTO;
@@ -52,14 +51,10 @@ public class ResponseUtil {
 		rdto.setResponseMessage(rc.message());
 		rdto.setResponseCode(rc.code().value());
 		rdto.setHttpStatus(rc.code());
-		rdto.setResponseObject(null);
 		if(isObjInclude){
-			rdto.setResponseObject(obj);
+			rdto.setResponseData(obj);
 		}
 		return rdto;
 	}
 	
-	public static long extractOwnIdFromClaim(){
-		return 0;
-	}
 }

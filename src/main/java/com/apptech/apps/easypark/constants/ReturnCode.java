@@ -13,6 +13,7 @@ public enum ReturnCode {
 	EMAIL_AVAILABLE(HttpStatus.ACCEPTED,"Email id available"),
 	EMAIL_DUPLICATE(HttpStatus.CONFLICT,"Duplicate email id"),
 	BAD_INPUT(HttpStatus.BAD_REQUEST,"Invalid input"),
+	EMPTY_RECORD(HttpStatus.PRECONDITION_FAILED,"Records not found"),
 	SUCCESS(HttpStatus.OK,"Request processed successfully");
 	
 	

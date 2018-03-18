@@ -45,7 +45,11 @@ public class RequestUtil {
 			}
 
 			break;
+	   default:
+		   throw new ApplicationException("Invalid role identified.. \n Possible roles accepted [OWNER,AGENT,ADMIN] ");
+		   
 		}
+		 
 		return userDto;
 	}
 
